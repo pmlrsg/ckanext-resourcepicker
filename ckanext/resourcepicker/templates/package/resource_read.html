@@ -19,6 +19,21 @@
 {% block pre_primary %}
 {% if res.format == 'Picker' %}
 <section class="module module-resource">
+  {% block resource_inner%}
+    <div class="module-content">
+      <div class="actions">
+        {% block resource_actions %}
+        <ul>
+          {% block resource_actions_inner %}
+          {% if h.check_access('package_update', {'id':pkg.id }) %}
+            <li>{% link_for _('Manage'), controller='package', action='resource_edit', id=pkg.name, resource_id=res.id, class_='btn', icon='wrench' %}</li>
+          {% endif %}
+        </ul>
+          {% endblock %}
+        {% endblock %}
+      </div>
+    </div>
+  {% endblock %}
 {% snippet 'package/snippets/resource_picker.html' %}
 </section>
 {% else %}
@@ -38,11 +53,13 @@
 
 {% block scripts %}
   {{ super() }}
-
-  {# Import example_theme.css using Fanstatic.
-     'example_theme/' is the name that the example_theme/fanstatic directory
-     was registered with when the toolkit.add_resource() function was called.
-     'example_theme.css' is the path to the CSS file, relative to the root of
-     the fanstatic directory. #}
+  {# Import resource_picker.js using Fanstatic. #}
   {% resource 'resourcepicker/resource_picker.js' %}
+{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  {# Import resource_picker.css using Fanstatic. #}
+
+  {% resource 'resourcepicker/resource_picker.css' %}
 {% endblock %}

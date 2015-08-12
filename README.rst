@@ -32,9 +32,7 @@
 ckanext-resourcepicker
 =============
 
-.. Put a description of your extension here:
-   What does it do? What features does it have?
-   Consider including some screenshots or embedding a video!
+This is a resource picker that adds a picker to the CKAN resource page when the format is 'Picker'
 
 
 ------------

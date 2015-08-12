@@ -1,5 +1,9 @@
 var m_names=['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']; //stores the days of the month
 
+var hour_format = new Intl.DateTimeFormat(["en-US"],{day: "numeric", month: "short", year: "numeric", hour: "2-digit"});
+var day_format = new Intl.DateTimeFormat(["en-US"],{day: "numeric", month: "short", year: "numeric"});
+var month_format = new Intl.DateTimeFormat(["en-US"],{month: "short", year: "numeric"});
+
 var url_get=function url_get(sParam) {
    resource_url = resource_url.replace("http://", "");
 
@@ -96,30 +100,34 @@ var get_links = function get_links(start_date, end_date){
       new_url = new_url.replace(/mm/g, number_pad(current_date.getMonth()+1));
       new_url = new_url.replace(/dd/g, number_pad(current_date.getDate()));
       new_url = new_url.replace(/hh/g, number_pad(current_date.getHours()));
-      new_url = new_url.replace(/<model_name>/g, "dk1");
-      new_url = new_url.replace(/<standard_name>/g, $("#standard_name_select").val());
-      console.log(new_url);
+      new_url = new_url.replace(/&lt;model_name&gt;/g, "dk1");
+      new_url = new_url.replace(/&lt;standard_name&gt;/g, $("#standard_name_select").val());
+      var format = $("#format_select").val();
+      if(format === "wms"){
+         current_link = "https://wci.earth2observe.eu/thredds/wms/" + new_url +"?service=WMS&version=1.3.0&request=GetCapabilities";
+         }
+      else if(format === "wcs"){
+         current_link = "https://wci.earth2observe.eu/thredds/wcs/" + new_url +"?service=WCS&version=1.0.0&request=GetCapabilities";
+      }
+      else if(format === "opendap"){
+         current_link = "https://wci.earth2observe.eu/thredds/dodsC/" + new_url +".html";
+      }
+      console.log(current_date);
       if(hour){
+         link_list.push({date: hour_format.format(current_date), link: current_link})
          current_date.setHours(current_date.getHours()+3);
       }
       else if(day){
+         link_list.push({date: "current_date", link: current_link})
          current_date.setDate(current_date.getDate()+1);
       }
       else if(month){
+         link_list.push({date: "current_date", link: current_link})
          current_date.setMonth(current_date.getMonth()+1);
       }
       else if(year){
+         link_list.push({date: "current_date", link: current_link})
          current_date.setFullYear(current_date.getFullYear()+1);
-      }
-      var format = $("#format_select").val();
-      if(format === "wms"){
-         link_list.push("https://wci.earth2observe.eu/thredds/wms/" + new_url +"?service=WMS&version=1.3.0&request=GetCapabilities");
-         }
-      else if(format === "wcs"){
-         link_list.push("https://wci.earth2observe.eu/thredds/wcs/" + new_url +"?service=WCS&version=1.0.0&request=GetCapabilities");
-      }
-      else if(format === "opendap"){
-         link_list.push("https://wci.earth2observe.eu/thredds/dodsC/" + new_url +".html");
       }
    }
    return link_list;
@@ -130,22 +138,26 @@ var month=(year && url_get('url').search("mm") > -1);
 var day=(month && url_get('url').search("dd") > -1);
 var hour=(day && url_get('url').search("hh") > -1);
 var start=new Date(url_get('start'));
-   var finish=new Date(url_get('finish'));
-   if(url_get('standard_names')){
-      var standard_names=url_get('standard_names').split(',');
-   }
-   var url=url_get('url');
+var finish=new Date(url_get('finish'));
+if(url_get('standard_names')){
+   var standard_names=url_get('standard_names').split(',');
+}
+var url=url_get('url');
 
 var print_hyperlinks = function print_hyperlinks(links){
    var hyperlinks = [];
    for(i = 0; i < links.length; i++){
-      hyperlinks.push("<a href='" + links[i] + "'>" + links[i] + "</a>");
+      hyperlinks.push(links[i].date+": <a href='" + links[i].link + "'>" + links[i].link + "</a>");
    }
    $("#hyperlinks").html(hyperlinks.join("<br/>"));
 }
 
 var save_links = function save_links(links){
-   var textToWrite = links.join("\n");
+   var links_to_write = [];
+   for(i=0; i<links.length; i++){
+      links_to_write.push(links[i].link)
+   }
+   var textToWrite = links_to_write.join("\n");
    var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
    var fileNameToSaveAs = "data_URLs.txt";
 

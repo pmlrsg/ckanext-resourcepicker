@@ -1,0 +1,21 @@
+.resource-picker{
+   text-align: center;
+   clear:both;
+}
+
+.resource-picker select{
+   width: auto;
+}
+
+.resource-picker .date_control{
+   display:inline-block;
+}
+
+.resource-picker .date_div{
+   width:49%;
+   float:left;
+}
+
+#hyperlinks{
+   text-align: left;
+}
