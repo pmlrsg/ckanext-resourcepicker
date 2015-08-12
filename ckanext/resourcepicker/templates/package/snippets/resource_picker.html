@@ -1,0 +1,75 @@
+{% trans %}
+<div class='module-content'>
+   <div id='start_times'>
+      <b>Start Date</b>
+      <div class='year_select_div' id='start_year_select_div' style="display: none;">
+         Year: <select class="year_select" id='start_year_select'></select>
+      </div>
+      <div class='month_select_div' id='start_month_select_div' style="display: none;">
+         Month: <select class="month_select" id='start_month_select'></select>
+      </div>
+      <div class='day_select_div' id='start_day_select_div' style="display: none;">
+         Day: <select class="day_select" id='start_day_select'></select>
+      </div>
+      <div class='hour_select_div' id='start_hour_select_div' style="display: none;">
+         Hour:
+         <select class="hour_select" id='start_hour_select'>
+            <option value="0">00:00</option>
+            <option value="3">03:00</option>
+            <option value="6">06:00</option>
+            <option value="9">09:00</option>
+            <option value="12">12:00</option>
+            <option value="15">15:00</option>
+            <option value="18">18:00</option>
+            <option value="21">21:00</option>
+         </select>
+      </div>
+   </div>
+   <br/>
+   <div id='end_times'>
+      <b>End Date</b>
+      <div class='year_select_div' id='end_year_select_div' style="display: none;">
+         Year: <select class="year_select" id='end_year_select'></select>
+      </div>
+      <div class='month_select_div' id='end_month_select_div' style="display: none;">
+         Month: <select class="month_select" id='end_month_select'></select>
+      </div>
+      <div class='day_select_div' id='end_day_select_div' style="display: none;">
+         Day: <select class="day_select" id='end_day_select'></select>
+      </div>
+      <div class='hour_select_div' id='end_hour_select_div' style="display: none;">
+         Hour:
+         <select class="hour_select" id='end_hour_select'>
+            <option value="0">00:00</option>
+            <option value="3">03:00</option>
+            <option value="6">06:00</option>
+            <option value="9">09:00</option>
+            <option value="12">12:00</option>
+            <option value="15">15:00</option>
+            <option value="18">18:00</option>
+            <option value="21">21:00</option>
+         </select>
+      </div>
+   </div>
+   <br/>
+   <b>Other</b>
+   <div id='standard_name_select_div' style="display: none;">
+      Standard Name: <select id="standard_name_select"></select>
+   </div>
+   <div id='format_select_div'>
+      Format:
+      <select id="format_select">
+         <option value='wcs'>WCS</option>
+         <option value='wms'>WMS</option>
+         <option value='opendap'>OPENDAP</option>
+      </select>
+   </div>
+   <br/>
+   <button id='submit' type='button' class='btn btn-primary'>View URL list</button>
+   <button id='save' type='button' class='btn btn-primary'>Download URL list</button>
+   <p id="error"></p>
+   <p id="hyperlinks"></p>
+</div>
+
+
+{% endtrans %}
