@@ -1,18 +1,23 @@
 var m_names=['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']; //stores the days of the month
 
 var url_get=function url_get(sParam) {
-    var sPageURL=decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables=sPageURL.split('&'),
-        sParameterName,
-        i;
+   resource_url = resource_url.replace("http://", "");
 
-    for (i=0; i < sURLVariables.length; i++) {
-        sParameterName=sURLVariables[i].split('=');
+   //take this out eventually
 
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
-        }
-    }
+   resource_url = resource_url.replace("resource_picker.html?", "");
+
+   var sPageURL=resource_url,
+      sURLVariables=sPageURL.split('&amp;'),
+      sParameterName,
+      i;
+
+   for (i=0; i < sURLVariables.length; i++) {
+      sParameterName=sURLVariables[i].split('=');
+      if (sParameterName[0] === sParam) {
+         return sParameterName[1] === undefined ? true : sParameterName[1];
+      }
+   }
 };
 
 var days_in_month=function days_in_month(month,year) {
@@ -83,12 +88,6 @@ var number_pad = function number_pad(num){
    return num
 }
 
-var convert_to_date=function convert_to_date(date_string){ // takes a date string (UK format) and returns the date
-   var splitDate=date_string.split('/');
-   var month=splitDate[1] - 1; //Javascript months are 0-11
-   return new Date(splitDate[2], month, splitDate[0]);
-}
-
 var get_links = function get_links(start_date, end_date){
    var link_list = [];
    var current_date = new Date(start_date);
@@ -130,8 +129,8 @@ var year=(url_get('url').search("yyyy") > -1);
 var month=(year && url_get('url').search("mm") > -1);
 var day=(month && url_get('url').search("dd") > -1);
 var hour=(day && url_get('url').search("hh") > -1);
-var start=convert_to_date(url_get('start'));
-   var finish=convert_to_date(url_get('finish'));
+var start=new Date(url_get('start'));
+   var finish=new Date(url_get('finish'));
    if(url_get('standard_names')){
       var standard_names=url_get('standard_names').split(',');
    }
@@ -166,7 +165,6 @@ var save_links = function save_links(links){
       downloadLink.style.display = "none";
       document.body.appendChild(downloadLink);
    }
-
    downloadLink.click();
 }
 
@@ -175,7 +173,6 @@ var destroyClickedElement = function destroyClickedElement(event){
 }
 
 $(document).ready(function(){
-   console.log("Working");
    add_years("#start_year_select", start.getFullYear(), finish.getFullYear());
    add_years("#end_year_select", start.getFullYear(), finish.getFullYear());
    if(year){
