@@ -19,21 +19,15 @@
 {% block pre_primary %}
 {% if res.format == 'Picker' %}
 <section class="module module-resource">
-  {% block resource_inner%}
     <div class="module-content">
       <div class="actions">
-        {% block resource_actions %}
         <ul>
-          {% block resource_actions_inner %}
           {% if h.check_access('package_update', {'id':pkg.id }) %}
             <li>{% link_for _('Manage'), controller='package', action='resource_edit', id=pkg.name, resource_id=res.id, class_='btn', icon='wrench' %}</li>
           {% endif %}
         </ul>
-          {% endblock %}
-        {% endblock %}
       </div>
     </div>
-  {% endblock %}
 {% snippet 'package/snippets/resource_picker.html' %}
 </section>
 {% else %}
@@ -55,6 +49,8 @@
   {{ super() }}
   {# Import resource_picker.js using Fanstatic. #}
   {% resource 'resourcepicker/resource_picker.js' %}
+  {# Import common_functions.js using Fanstatic. #}
+  {% resource 'resourcepicker/common_functions.js' %}
 {% endblock %}
 
 {% block styles %}
