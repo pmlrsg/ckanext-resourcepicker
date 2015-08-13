@@ -9,20 +9,20 @@ var days_in_month = function days_in_month(month,year) {// This returns the numb
     return new Date(year, month, 0).getDate();
 };
 
-var add_years = function add_years(id, start, finish) { // Adds years between the start and finish given to the select with the given ID
-    for (var i=start; i <= finish ; i++){
+var add_years = function add_years(id, start, end) { // Adds years between the start and end given to the select with the given ID
+    for (var i=start; i <= end ; i++){
       var option=$('<option></option>').val(i).html(i);
       $(id).append(option);
    }
 };
 
-var change_year = function change_year(id, start, finish){ // This function is run when the year is changed.
+var change_year = function change_year(id, start, end){ // This function is run when the year is changed.
    var prefix = id.split('_')[0]; // Gets the prefix of the id e.g. '#start' or '#end'
    if($(id).val() == start.getFullYear()){
       month_selector(prefix + "_month_select", start.getMonth()+1,12); // If the selected year is the first on the list it will change the months accordingly
    }
-   else if($(id).val() == finish.getFullYear()){
-      month_selector(prefix + "_month_select", 1,finish.getMonth()+1); // If the selected year is the last on the list it will change the months accordingly
+   else if($(id).val() == end.getFullYear()){
+      month_selector(prefix + "_month_select", 1,end.getMonth()+1); // If the selected year is the last on the list it will change the months accordingly
    }
    else{
       month_selector(prefix + "_month_select", 1,12); // Otherwise it will put all the months in
@@ -32,10 +32,10 @@ var change_year = function change_year(id, start, finish){ // This function is r
    day_selector(prefix + "_day_select", 1, days_in_month(selected_month, selected_year)); // Changes the day so that it displays the correct days
 };
 
-var month_selector=function month_selector(id, start, finish) { // This function clears the month selector and re-populates it depending on the start and finish values
+var month_selector=function month_selector(id, start, end) { // This function clears the month selector and re-populates it depending on the start and end values
    var selected_month=parseInt($(id).val());
    $(id).empty();
-    for (var i=start; i <= finish ; i++){
+    for (var i=start; i <= end ; i++){
       var num = number_pad(i);
       var option=$('<option></option>').val(num).html(m_names[i-1]);
       $(id).append(option);
@@ -52,10 +52,10 @@ var change_month = function change_month(id){ // This function is run when the m
    day_selector(prefix + "_day_select", 1, days_in_month(selected_month, selected_year)); // Changes the day depending on the month and year
 };
 
-var day_selector=function day_selector(id, start, finish) { // This function clears the day selector and re-populates it depending on the start and finish values
+var day_selector=function day_selector(id, start, end) { // This function clears the day selector and re-populates it depending on the start and end values
    var selected_day=parseInt($(id).val());
    $(id).empty();
-    for (var i=start; i <= finish ; i++){
+    for (var i=start; i <= end ; i++){
       var num = number_pad(i);
       var option=$('<option></option>').val(num).html(num);
       $(id).append(option);
@@ -102,13 +102,13 @@ var get_links = function get_links(start_date, end_date){ // This function makes
       new_path = new_path.replace(/&lt;standard_name&gt;/g, $("#standard_name_select").val()); // Replaces the standard name with the selected value
       var format = $("#format_select").val(); // stores the link in a variable depending on the selected format seleceted
       if(format === "wms"){
-         current_link = "https://wci.earth2observe.eu/thredds/wms/" + new_path +"?service=WMS&version=1.3.0&request=GetCapabilities";
+         current_link = domain + "wms/" + new_path +"?service=WMS&version=1.3.0&request=GetCapabilities";
          }
       else if(format === "wcs"){
-         current_link = "https://wci.earth2observe.eu/thredds/wcs/" + new_path +"?service=WCS&version=1.0.0&request=GetCapabilities";
+         current_link = domain + "wcs/" + new_path +"?service=WCS&version=1.0.0&request=GetCapabilities";
       }
       else if(format === "opendap"){
-         current_link = "https://wci.earth2observe.eu/thredds/dodsC/" + new_path +".html";
+         current_link = domain + "dodsC/" + new_path +".html";
       }
       // This next block stores the date and link in the list, It also increments the date ready for the next step of the loop
       // it uses the hour, day, month and year variables to decide the date format and the amount to increment
@@ -137,11 +137,12 @@ var month=(year && url_get(resource_url, 'path').search("mm") > -1); // If the u
 var day=(month && url_get(resource_url, 'path').search("dd") > -1); // If the url given contains 'dd' and month is true then this is set to true
 var hour=(day && url_get(resource_url, 'path').search("hh") > -1); // If the url given contains 'hh' and day is true then this is set to true
 var start=new Date(url_get(resource_url, 'start')); // Gets the start date given in the url
-var finish=new Date(url_get(resource_url, 'finish')); // Gets the end date given in the url
+var end=new Date(url_get(resource_url, 'end')); // Gets the end date given in the url
 if(url_get(resource_url, 'standard_names')){
    var standard_names=url_get(resource_url, 'standard_names').split(','); // If there are any standard names given then it will add them to this variable
 }
 var path=url_get(resource_url, 'path'); // Gets the given URL
+var domain=url_get(resource_url, 'domain'); // Gets the given domain
 
 var print_hyperlinks = function print_hyperlinks(links){ // Prints out the dates and hyperlinks stored in the links array of objects
    var hyperlinks = []; // An array for storing all the '<a>' tags
@@ -184,8 +185,8 @@ var destroyClickedElement = function destroyClickedElement(event){ // A function
 }
 
 $(document).ready(function(){ // When the document is ready
-   add_years("#start_year_select", start.getFullYear(), finish.getFullYear()); // Adds the start years
-   add_years("#end_year_select", start.getFullYear(), finish.getFullYear()); // Adds the end years
+   add_years("#start_year_select", start.getFullYear(), end.getFullYear()); // Adds the start years
+   add_years("#end_year_select", start.getFullYear(), end.getFullYear()); // Adds the end years
    if(year){
       $(".year_select_div").show(); // If year is true then show the year selector divs
    }
@@ -246,7 +247,7 @@ $(document).ready(function(){ // When the document is ready
    });
 
    $(".year_select").change(function(e){ // When you change the year run the change_year method
-      change_year("#" + e.target.id, start, finish);
+      change_year("#" + e.target.id, start, end);
    });
 
    $(".month_select").change(function(e){ // When you change the month run the change_ymonth method
