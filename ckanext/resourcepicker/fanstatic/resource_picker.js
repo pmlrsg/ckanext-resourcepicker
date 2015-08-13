@@ -141,7 +141,7 @@ var finish=new Date(url_get(resource_url, 'finish')); // Gets the end date given
 if(url_get(resource_url, 'standard_names')){
    var standard_names=url_get(resource_url, 'standard_names').split(','); // If there are any standard names given then it will add them to this variable
 }
-var url=url_get(resource_url, 'path'); // Gets the given URL
+var path=url_get(resource_url, 'path'); // Gets the given URL
 
 var print_hyperlinks = function print_hyperlinks(links){ // Prints out the dates and hyperlinks stored in the links array of objects
    var hyperlinks = []; // An array for storing all the '<a>' tags
