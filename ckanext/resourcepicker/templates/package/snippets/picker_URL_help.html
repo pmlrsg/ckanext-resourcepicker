@@ -1,0 +1,12 @@
+<!-- This is a div that shows a message to the user, it is shown whent the user selects the format Picker-->
+<div id='picker-pointer' hidden>
+   Choosing 'Picker' as the format changes some things, Firstly you will need to change the format of the URL.<br/>
+   This should be a path that includes some variables, theses include:<br/>
+   Start date (start) ; The start of the dataset, formatted 'yyyy-mm-dd'.<br/>
+   End Date (end) ; The end of the dataset., formatted 'yyyy-mm-dd'.<br/>
+   Path (path) ; This is the unique part of the dataset URL with dates replaced with 'yyyy', 'mm', 'dd', and 'hh'. you can also add '<model_name>' or '<standard_name>' if required.<br/>
+   Domain (domain) ; The domain of the dataset.<br/>
+   Standard Name(s) (standard_names) ; the standard names that can be added to the URL (where you put '<standard_names>' in the path) seperated by commas.<br/>
+   <b>Here is an Example:</b><br/>
+   start=1979-01-01&end=2014-12-01&standard_names=Rainf,Snowf,PSurf,Qair,LWdown,SWdown,Tair,Wind&path=ecmwf/met_forcing_erai/yyyy/<standard_name>_ERAI_yyyymm.nc&domain=https://wci.earth2observe.eu/thredds/
+</div>

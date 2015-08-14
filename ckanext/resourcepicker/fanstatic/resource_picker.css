@@ -19,3 +19,9 @@
 #hyperlinks{
    text-align: left;
 }
+
+#picker-pointer{
+   padding-left:130px;
+   margin-top:-20px;
+   margin-bottom:20px;
+}

@@ -37,6 +37,13 @@
   {% snippet 'package/snippets/resource_info.html', res=res %}
 {% endblock %}
 
+{% block styles %}
+  {{ super() }}
+  {# Import resource_picker.css using Fanstatic. #}
+
+  {% resource 'resourcepicker/resource_picker.css' %}
+{% endblock %}
+
 {% block scripts %}
   {{ super() }}
   {% resource 'vendor/fileupload' %}

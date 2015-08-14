@@ -2,6 +2,7 @@ var error = false; // Starter value of false for no errors
 var error_list = [];
 
 $(document).ready(function(){
+   show_URL_help();
 
    $('.form-actions .btn-primary').on('click', function(e){ // When you click to submit (Update Resource)
       var picker_url = $('#field-image-url').val(); // Store the given URL in a parameter ready for validation
@@ -38,6 +39,9 @@ $(document).ready(function(){
          $('#resource-edit').prepend(create_error_explanation());
          error_list = []; // Resets the error list after
       }
+   });
+   $('#field-format').on('change', function(e){ // when you change the format, it changes the page accordingly
+      show_URL_help();
    });
 });
 
@@ -83,3 +87,15 @@ var create_error_explanation = function create_error_explanation(){ // This retu
    var error_string = '<div class="error-explanation alert alert-error"><p>The form contains invalid entries:</p>' + html_error_list + '</div>'; // Adds the error div and puts the list in there
    return error_string;
 };
+
+var show_URL_help = function show_URL_help(){
+   if($('#field-format').val() === 'Picker'){
+         $('#picker-pointer').show();
+      }
+      else{
+         $('.error-block').remove();
+         $('#field-image-url').parent().parent().removeClass("error");
+         $('.error-explanation').remove();
+         $('#picker-pointer').hide();
+      }
+}
