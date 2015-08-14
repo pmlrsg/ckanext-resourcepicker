@@ -1,0 +1,15 @@
+{% ckan_extends %}
+
+
+{% block styles %}
+  {{ super() }}
+  {% resource 'resourcepicker/resource_picker.css' %}
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  {% resource 'vendor/fileupload' %}
+  {% resource 'resourcepicker/picker_validation.js' %}
+  {# Import common_functions.js using Fanstatic. #}
+  {% resource 'resourcepicker/common_functions.js' %}
+{% endblock %}
