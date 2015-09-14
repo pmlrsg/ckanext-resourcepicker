@@ -131,7 +131,18 @@ var get_links = function get_links(start_date, end_date){ // This function makes
    }
    return link_list; // Returns the list of dates and links
 }
-
+// Boolean values to specify the degree of acuracy of the dates
+var year=(url_get(resource_url, 'path').search("yyyy") > -1); // If the url given contains 'yyyy' then this is set to true
+var month=(year && url_get(resource_url, 'path').search("mm") > -1); // If the url given contains 'mm' and year is true then this is set to true
+var day=(month && url_get(resource_url, 'path').search("dd") > -1); // If the url given contains 'dd' and month is true then this is set to true
+var hour=(day && url_get(resource_url, 'path').search("hh") > -1); // If the url given contains 'hh' and day is true then this is set to true
+var start=new Date(url_get(resource_url, 'start')); // Gets the start date given in the url
+var end=new Date(url_get(resource_url, 'end')); // Gets the end date given in the url
+if(url_get(resource_url, 'standard_names')){
+   var standard_names=url_get(resource_url, 'standard_names').split(','); // If there are any standard names given then it will add them to this variable
+}
+var path=url_get(resource_url, 'path'); // Gets the given URL
+var domain=url_get(resource_url, 'domain'); // Gets the given domain
 
 var print_hyperlinks = function print_hyperlinks(links){ // Prints out the dates and hyperlinks stored in the links array of objects
    var hyperlinks = []; // An array for storing all the '<a>' tags
@@ -174,19 +185,6 @@ var destroyClickedElement = function destroyClickedElement(event){ // A function
 }
 
 $(document).ready(function(){ // When the document is ready
-   // Boolean values to specify the degree of acuracy of the dates
-   var year=(url_get(resource_url, 'path').search("yyyy") > -1); // If the url given contains 'yyyy' then this is set to true
-   var month=(year && url_get(resource_url, 'path').search("mm") > -1); // If the url given contains 'mm' and year is true then this is set to true
-   var day=(month && url_get(resource_url, 'path').search("dd") > -1); // If the url given contains 'dd' and month is true then this is set to true
-   var hour=(day && url_get(resource_url, 'path').search("hh") > -1); // If the url given contains 'hh' and day is true then this is set to true
-   var start=new Date(url_get(resource_url, 'start')); // Gets the start date given in the url
-   var end=new Date(url_get(resource_url, 'end')); // Gets the end date given in the url
-
-   if(url_get(resource_url, 'standard_names')){
-      var standard_names=url_get(resource_url, 'standard_names').split(','); // If there are any standard names given then it will add them to this variable
-   }
-   var path=url_get(resource_url, 'path'); // Gets the given URL
-   var domain=url_get(resource_url, 'domain'); // Gets the given domain
    add_years("#start_year_select", start.getFullYear(), end.getFullYear()); // Adds the start years
    add_years("#end_year_select", start.getFullYear(), end.getFullYear()); // Adds the end years
    if(year){
