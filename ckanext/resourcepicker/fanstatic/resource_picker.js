@@ -108,19 +108,19 @@ var get_links = function get_links(start_date, end_date){ // This function makes
       // This next block stores the date and link in the list, It also increments the date ready for the next step of the loop
       // it uses the hour, day, month and year variables to decide the date format and the amount to increment
       if(hour){
-         link_list.push({date: current_date, link: current_link})
+         link_list.push({date: number_pad(current_date.getDate()) + '/' + number_pad(current_date.getMonth()) + '/' + current_date.getFullYear(), link: current_link})
          current_date.setHours(current_date.getHours()+3);
       }
       else if(day){
-         link_list.push({date: current_date, link: current_link})
+         link_list.push({date: number_pad(current_date.getDate()) + '/' + number_pad(current_date.getMonth()) + '/' + current_date.getFullYear(), link: current_link})
          current_date.setDate(current_date.getDate()+1);
       }
       else if(month){
-         link_list.push({date: current_date, link: current_link})
+         link_list.push({date: m_names[current_date.getMonth()-1] + '/' + current_date.getFullYear(), link: current_link})
          current_date.setMonth(current_date.getMonth()+1);
       }
       else if(year){
-         link_list.push({date: current_date, link: current_link})
+         link_list.push({date: current_date.getFullYear(), link: current_link})
          current_date.setFullYear(current_date.getFullYear()+1);
       }
    }
