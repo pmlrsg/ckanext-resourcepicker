@@ -19,24 +19,20 @@ $(document).ready(function(){
          var domain = (url_get(picker_url, 'domain'));
          check_domain(domain);
 
+         if(error_list.length !== 0){ // Sets the error variable
+            error = true;
+         }
+         else{
+            error = false;
+         }
       }
-
-      
-      if(error_list.length !== 0){ // Sets the error variable
-         error = true;
-      }
-      else{
-         error = false;
-      }
-
-      // This block removes and previous errors
-      $('.error-block').remove();
-      $('#field-image-url').parent().parent().removeClass("error");
-      $('.error-explanation').remove();
 
       if(error){ // If there is an error
          e.preventDefault(); // Stops the form submition
-         
+         // This block removes and previous errors
+         $('.error-block').remove();
+         $('#field-image-url').parent().parent().removeClass("error");
+         $('.error-explanation').remove();
          // This block then adds the errors and error formatting
          $('#field-image-url').parent().append('<span class="error-block">Invalid Picker URL See Above For Details</span>');
          $('#field-image-url').parent().parent().addClass("error");
