@@ -1,10 +1,5 @@
 var m_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']; //stores the days of the month
 
-// Date formats to be returned with Links on the page
-var hour_format = new Intl.DateTimeFormat(["en-US"],{day: "numeric", month: "short", year: "numeric", hour: "2-digit"});
-var day_format = new Intl.DateTimeFormat(["en-US"],{day: "numeric", month: "short", year: "numeric"});
-var month_format = new Intl.DateTimeFormat(["en-US"],{month: "short", year: "numeric"});
-
 var days_in_month = function days_in_month(month,year) {// This returns the number of days in any given month and year
     return new Date(year, month, 0).getDate();
 };
