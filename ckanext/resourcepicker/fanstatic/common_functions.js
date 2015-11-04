@@ -1,5 +1,5 @@
 var url_get=function url_get(url, sParam) { // A function for getting parameters from the url
-   url.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace("http://", "")
+   url = url.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace("http://", "");
    var sPageURL = url,
       sURLVariables = sPageURL.split('&'),
       sParameterName,

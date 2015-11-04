@@ -20,8 +20,8 @@ $(document).ready(function(){
          check_domain(domain);
 
       }
+     
 
-      
       if(error_list.length !== 0){ // Sets the error variable
          error = true;
       }

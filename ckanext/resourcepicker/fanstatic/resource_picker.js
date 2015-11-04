@@ -93,8 +93,8 @@ var get_links = function get_links(start_date, end_date){ // This function makes
       new_path = new_path.replace(/mm/g, number_pad(current_date.getMonth()+1)); // Replaces mm with the month in the loop
       new_path = new_path.replace(/dd/g, number_pad(current_date.getDate())); // Replaces dd with the day in the loop
       new_path = new_path.replace(/hh/g, number_pad(current_date.getHours())); // Replaces hh with the hour in the loop
-      new_path = new_path.replace(/&lt;model_name&gt;/g, "dk1"); // Replaces anything with model name in the url to dk1 (temporary thing)
-      new_path = new_path.replace(/&lt;standard_name&gt;/g, $("#standard_name_select").val()); // Replaces the standard name with the selected value
+      new_path = new_path.replace(/<model_name>/g, "dk1"); // Replaces anything with model name in the url to dk1 (temporary thing)
+      new_path = new_path.replace(/<standard_name>/g, $("#standard_name_select").val()); // Replaces the standard name with the selected value
       var format = $("#format_select").val(); // stores the link in a variable depending on the selected format seleceted
       if(format === "wms"){
          current_link = domain + "wms/" + new_path +"?service=WMS&version=1.3.0&request=GetCapabilities";
